@@ -315,16 +315,16 @@ export default function Office() {
 
   const joinRoom = async () => {
     if (!userName.trim() || !selectedRoom || !office || !user) return;
-    
+
     setIsEntering(true);
     localStorage.setItem('userName', userName.trim());
-    
+
     // Store office context for the room
     localStorage.setItem('currentOfficeId', office.id);
     if (isOwner) {
       localStorage.setItem(`office_${office.id}_owner`, user.uid);
     }
-    
+
     try {
       // Track room joining
       const selectedRoomData = office.rooms.find(r => r.id === selectedRoom);
@@ -342,7 +342,7 @@ export default function Office() {
     } catch (error) {
       console.error('Error tracking room join:', error);
     }
-    
+
     setTimeout(() => {
       router.push(`/room/${selectedRoom}?officeId=${office.id}`);
     }, 1000);
@@ -351,7 +351,7 @@ export default function Office() {
   const handleJoinRequestAction = async (requestId: string, action: 'approve' | 'deny') => {
     try {
       await updateJoinRequestStatus(requestId, action === 'approve' ? 'approved' : 'denied');
-      
+
       if (action === 'approve') {
         // Additional logic for approved users can be added here
         console.log('User approved for office access');
@@ -364,7 +364,7 @@ export default function Office() {
 
   const sendInvitation = async (email: string, message?: string) => {
     if (!office || !user) return;
-    
+
     try {
       const { sendEmailInvitation } = await import('../../lib/firebase');
       await sendEmailInvitation(
@@ -376,7 +376,7 @@ export default function Office() {
         email,
         message
       );
-      
+
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 3000);
     } catch (error) {
@@ -387,14 +387,14 @@ export default function Office() {
 
   const handleSendInvitation = async () => {
     if (!inviteEmail.trim() || !office || !user) return;
-    
+
     setInviteLoading(true);
     setInviteError(''); // Clear any previous errors
-    
+
     try {
       // Import Firebase functions
       const { sendOfficeInvitation } = await import('../../lib/firebase');
-      
+
       // Send invitation through Firestore
       await sendOfficeInvitation({
         officeId: office.id,
@@ -406,9 +406,9 @@ export default function Office() {
         message: inviteMessage.trim(),
         createdAt: new Date().toISOString()
       });
-      
+
       setInviteSuccess(`Invitation sent to ${inviteEmail.trim()}. They will see it in their dashboard.`);
-      
+
       // Auto-close after 3 seconds
       setTimeout(() => {
         setShowInviteModal(false);
@@ -417,7 +417,7 @@ export default function Office() {
         setInviteSuccess('');
         setInviteError('');
       }, 3000);
-      
+
     } catch (error: any) {
       console.error('Error sending invitation:', error);
       setInviteError(error.message || 'Failed to send invitation. Please try again.');
@@ -442,7 +442,7 @@ export default function Office() {
     flexDirection: 'column' as const,
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: hoveredRoom === room.id 
+    boxShadow: hoveredRoom === room.id
       ? `0 8px 25px -5px ${room.color}40, 0 4px 10px -3px ${room.color}20`
       : `0 2px 8px -2px rgba(0, 0, 0, 0.1), 0 1px 4px -1px rgba(0, 0, 0, 0.06)`,
   });
@@ -495,15 +495,16 @@ export default function Office() {
           <button
             onClick={() => router.push('/')}
             style={{
-              padding: '16px 32px',
-              background: '#0065FF',
+              padding: isMobile ? '8px 16px' : '12px 20px',
+              background: '#3b82f6',
               color: 'white',
               border: 'none',
               borderRadius: '28px',
               cursor: 'pointer',
               fontSize: '16px',
               fontWeight: '600',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
             }}
             onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
             onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
@@ -569,7 +570,7 @@ export default function Office() {
               <span style={{ fontSize: isMobile ? '16px' : '18px' }}>←</span>
               {!isMobile && 'Back to Home'}
             </button>
-            
+
             <div style={{ flex: 1, minWidth: 0 }}>
               <h1 style={{
                 fontSize: isMobile ? '20px' : '28px',
@@ -596,9 +597,9 @@ export default function Office() {
             </div>
           </div>
 
-          <div style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
             gap: isMobile ? '8px' : '16px',
             flexWrap: 'wrap'
           }}>
@@ -832,7 +833,7 @@ export default function Office() {
                 }}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
                 </svg>
                 Add Room
               </button>
@@ -1157,7 +1158,7 @@ export default function Office() {
                         flex: 1,
                         minWidth: '120px',
                         padding: '16px 24px',
-                        background: userName.trim() 
+                        background: userName.trim()
                           ? office.rooms.find(r => r.id === selectedRoom)?.color || '#3b82f6'
                           : '#9CA3AF',
                         color: 'white',
@@ -1423,8 +1424,8 @@ export default function Office() {
                       style={{
                         width: '100%',
                         padding: '16px',
-                        background: inviteEmail.trim() && !inviteLoading 
-                          ? '#059669' 
+                        background: inviteEmail.trim() && !inviteLoading
+                          ? '#059669'
                           : '#666',
                         color: 'white',
                         border: 'none',
@@ -1500,7 +1501,7 @@ export default function Office() {
                       width: '64px',
                       height: '64px',
                       borderRadius: '50%',
-                      background: '#0065FF',
+                      background: '#3b82f6',
                       margin: '0 auto 16px',
                       display: 'flex',
                       alignItems: 'center',
@@ -1546,7 +1547,7 @@ export default function Office() {
                       }}>
                         Basic Information
                       </h3>
-                      
+
                       <div style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -1576,7 +1577,7 @@ export default function Office() {
                               transition: 'border-color 0.3s ease',
                               boxSizing: 'border-box'
                             }}
-                            onFocus={(e) => e.target.style.borderColor = '#0052CC'}
+                            onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
                             onBlur={(e) => e.target.style.borderColor = '#E2E8F0'}
                           />
                         </div>
@@ -1607,7 +1608,7 @@ export default function Office() {
                               resize: 'none',
                               fontFamily: 'inherit'
                             }}
-                            onFocus={(e) => e.target.style.borderColor = '#0052CC'}
+                            onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
                             onBlur={(e) => e.target.style.borderColor = '#E2E8F0'}
                           />
                         </div>
@@ -1626,7 +1627,7 @@ export default function Office() {
                       }}>
                         Access Control
                       </h3>
-                      
+
                       <div style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -1788,7 +1789,7 @@ export default function Office() {
                               transition: 'border-color 0.3s ease',
                               boxSizing: 'border-box'
                             }}
-                            onFocus={(e) => e.target.style.borderColor = '#0052CC'}
+                            onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
                             onBlur={(e) => e.target.style.borderColor = '#E2E8F0'}
                           />
                         </div>
@@ -1829,7 +1830,7 @@ export default function Office() {
                         onClick={saveOfficeSettings}
                         style={{
                           padding: '12px 24px',
-                          background: '#0065FF',
+                          background: '#3b82f6',
                           color: 'white',
                           border: 'none',
                           borderRadius: '8px',

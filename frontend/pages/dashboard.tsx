@@ -160,13 +160,13 @@ export default function Dashboard() {
         user.uid,
         user.displayName || user.email || 'Unknown User'
       );
-      
+
       // Close modal and reset form
       setShowCreateOffice(false);
       setNewOfficeName('');
       setNewOfficeDescription('');
       setAuthError('');
-      
+
       // Navigate to the new office
       await router.push(`/office/${officeId}`);
     } catch (error) {
@@ -249,7 +249,7 @@ export default function Dashboard() {
               fontSize: '24px',
               fontWeight: '700',
               margin: 0,
-              color: '#4f46e5'
+              color: '#3b82f6'
             }}>
               NexOffice
             </h1>
@@ -355,15 +355,15 @@ export default function Dashboard() {
               cursor: 'pointer',
               transition: 'all 0.3s ease'
             }}
-            onClick={() => setShowCreateOffice(true)}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
+              onClick={() => setShowCreateOffice(true)}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
             >
               <div style={{
                 fontSize: '48px',
@@ -395,15 +395,15 @@ export default function Dashboard() {
               cursor: 'pointer',
               transition: 'all 0.3s ease'
             }}
-            onClick={() => setShowOfficeSelect(true)}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
+              onClick={() => setShowOfficeSelect(true)}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
             >
               <div style={{
                 fontSize: '48px',
@@ -621,7 +621,7 @@ export default function Dashboard() {
                   disabled={isCreatingOffice || !newOfficeName.trim()}
                   style={{
                     padding: '12px 24px',
-                    backgroundColor: isCreatingOffice || !newOfficeName.trim() ? '#666' : '#4f46e5',
+                    backgroundColor: isCreatingOffice || !newOfficeName.trim() ? '#666' : '#3b82f6',
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
@@ -629,7 +629,8 @@ export default function Dashboard() {
                     cursor: isCreatingOffice || !newOfficeName.trim() ? 'not-allowed' : 'pointer',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px'
+                    gap: '8px',
+                    boxShadow: isCreatingOffice || !newOfficeName.trim() ? 'none' : '0 4px 12px rgba(59, 130, 246, 0.3)'
                   }}
                 >
                   {isCreatingOffice ? (
@@ -753,12 +754,13 @@ export default function Dashboard() {
                   disabled={!officeCode.trim()}
                   style={{
                     padding: '12px 24px',
-                    backgroundColor: !officeCode.trim() ? '#666' : '#4f46e5',
+                    backgroundColor: !officeCode.trim() ? '#666' : '#3b82f6',
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
                     fontSize: '14px',
-                    cursor: !officeCode.trim() ? 'not-allowed' : 'pointer'
+                    cursor: !officeCode.trim() ? 'not-allowed' : 'pointer',
+                    boxShadow: !officeCode.trim() ? 'none' : '0 4px 12px rgba(59, 130, 246, 0.3)'
                   }}
                 >
                   Join Office
